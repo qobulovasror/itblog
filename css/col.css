@@ -1,0 +1,37 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.container {
+    margin: 0 auto;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+}
+.between {
+    justify-content: space-between;
+}
+.around {
+    justify-content: space-around;
+}
+ul li {
+    list-style: none;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.btn {
+    width: max-content;
+    height: max-content;
+    padding: 5px;
+    background-color: #00f;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+}

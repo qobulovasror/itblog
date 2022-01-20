@@ -1,0 +1,316 @@
+.container {
+    width: 80%;
+}
+header {
+    width: 100%;
+    height: 70px;
+    background-color: #343A40;
+    padding: 20px 0;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+}
+header .container{
+    position: relative;
+}
+.navbar {
+    width: 100%;
+}
+.navbar .logo {
+    text-decoration: none;
+    font-size: 26px;
+    color: #fff;
+}
+.navbar .nav {
+    padding: 0px;
+} 
+.nav li {
+    cursor: pointer;
+    margin: 8px 5px;
+    color: #fff;
+    font-weight: bold;
+    /* background-color: blue; */
+}
+.nav li a {
+    padding: 7px;
+    width: max-content;
+    color: #fff;  
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.nav li .activ {
+    background-color: coral;
+}
+.nav li .noactiv {
+    background-color: transparent;
+}
+
+/* Dasturlash + qo'shimcha menu */
+.nav .addMenu {
+    position: relative;
+    height: 22px;
+}
+.nav li ul.navAddBox {
+    display: none;
+    position: absolute;
+    width: 130px;
+    height: max-content;
+    padding: 10px;
+    border: 1px solid #000;
+    background-color: #1b63ad;
+    border-radius: 10px;
+    top: 20px;
+    left: -10px;
+    cursor: auto;
+    transition: 2s all 2s;
+    z-index: 14;
+}
+.nav .addMenu:hover ul.navAddBox {
+    display: block;
+}
+
+/* header profil */
+ul.profil {
+    color: #fff;
+    font-weight: bold;
+    font-size: 25px;
+    position: relative;
+}
+ul.profil li {
+    margin: 6px 0;
+    margin-left: 5px;
+}
+ul.profil li#search {
+    cursor: pointer;
+}
+ul.profil a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* serach window */
+#searchWin {
+    width: 100%;
+    height: 70px;
+    background-color: #343a40bf;
+    padding: 15px 30px;
+    position: absolute;
+    /* top: -22px; */
+    top: -95px;
+    display: block;   
+    z-index: 15;
+    transition: .5s;
+}
+#searchWin input[type="text"] {
+    width: 65%;
+    margin: 2px 10px;
+    padding: 7px 15px;
+    font-size: 20px;
+} 
+#searchWin input[type="submit"] {
+    width: 17%;
+    margin: 6px 10px;
+    height: 38px;
+} 
+#searchWin #searchCancel {
+    color: #fff;
+    font-size: 25px;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    display: inline;
+    top: 10px;
+    font-size: 31px;
+}
+
+/* blog */
+.blog {
+    width: 100%;
+}
+.blog .container {
+    width: 85%;
+    position: relative;
+}
+.blog .blogmain {
+    width: 65%;
+    left: 0;
+    height: max-content;
+    padding: 20px 0;
+    margin-right: 20px;
+}
+.blog .blogmain .post {
+    width: 100%;
+    height: max-content;
+    border: 1px solid #000;
+    background-color: #ccc;
+    margin: 10px 0;
+    padding: 20px 30px;
+    border-radius: 15px;
+}
+.post .author {
+    padding: 5px;
+    /* border: 1px solid #000; */
+}
+.post .author img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: .5px solid #000;
+}
+.post .author h3 {
+    margin: 9px 18px;
+    font-size: 25px;
+}
+.post .author .data {
+    margin-top: 19px;
+    margin-left: 10px;
+}
+
+
+.post .postImg {
+    width: 100%;
+    margin: 15px auto;
+}
+.post .postTitle {
+    margin: 10px 0;
+}
+.post .post-text {
+    letter-spacing: 0.6px;
+    font-size: 18px;
+}
+.post .more.btn {
+    width: max-content;
+    height: max-content;
+    padding: 12px;
+    background-color: #00f;
+    border-radius: 10px;
+    margin: 15px 0;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+/* context menu */
+.blog .contextMenu {
+    width: 32%;
+    height: max-content;
+    right: 0;
+    padding: 22px;
+    margin: 30px 0;
+    border: 1px solid #000;
+    border-radius: 15px;
+    position: sticky;
+    top: 5%;
+}
+.contextMenu .textsearch ul li {
+    list-style: circle;
+    margin: 4px;
+    margin-left: 15px;
+}
+.textsearch {
+    margin-bottom: 20px;
+}
+.tegsearch li {
+    margin: 5px;
+}
+
+/* driction - keyingi page yo;naltirish */
+.driction {
+    width: 100%;
+    height: 53px;
+    border: 0.5px solid #555;
+    background-color: #ccccccde;
+    margin: 10px 0;
+    border-radius: 15px;
+    padding: 10px 27px;
+}
+.driction .btn {
+    padding: 7px 10px;
+}
+.driction a.btn{
+    color: #fff;
+    text-decoration: none;
+}
+.driction a.btn i {
+    font-size: 20px;
+    margin: 0 3px;
+}
+.drictnum {
+    padding: 7px 0;
+}
+.drictnum li {
+    margin: 0 10px;
+}
+
+
+/* footer */ 
+#contact {
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 20px;
+    background-color: #353535;
+    color: #fff;
+}
+#contact .bar-title {
+    left: 7%;
+}
+#contact .item1 {
+    width: 37%;
+}
+#contact .item {
+    width: 30%;
+    margin: 5px 10px;
+}
+#contact .item h4{
+    margin: 10px 0;
+    font-size: 24px;
+}
+#contact .item1 p{
+    margin-bottom: 10px;
+}
+#contact li {
+    margin: 5px 0;
+}
+#contact li .bx {
+    margin: 0 5px;
+    font-size: 20px;
+    color: #0f0;
+}
+#contact a {
+    color: #fff;
+}
+#contact hr {
+    margin: 10px 0 20px 0; 
+}
+.copry h5 {
+    font-size: 15px;
+    text-align: center;
+}
+
+.out {
+    width: max-content;
+    height: max-content;
+    background-color: #00f;
+    border-radius: 7px;
+    position: absolute;
+    right: 29%;
+    top: 30px;
+    padding: 10px;
+    z-index: 5;
+    display: none;
+}
+ul.profil:hover .out {
+    display: block;
+    display: flex;
+    flex-direction: column;
+}
+.out a {
+    font-size: 18px;
+    margin: 5px 0;
+}
+.out a[href='profil.php'] {
+    color: #e0fb00;
+}

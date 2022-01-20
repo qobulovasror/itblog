@@ -1,0 +1,132 @@
+body {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('../img/homeIndex1.jpg');
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#connect {
+    width: max-content;
+    height: 26px;
+    padding: 0px;
+    border-radius: 7px;
+    font-size: 17px;
+    color: #ffffff;
+    text-align: center;
+    position: absolute;
+    top: 10.7%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #c90000;
+}
+#alert {
+    cursor: pointer;
+    display: none;
+    transition: 0.5s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 238px;
+    height: min-content;
+    background: #f55d2dfa;
+    padding: 13px 10px;
+    font-size: 19px;
+    text-align: center;
+    color: #fff;
+    border-radius: 7px;
+}
+.box {
+    width: 480px;
+    height: max-content;
+    background: #ccccd396;
+    border-radius: 15px;
+    padding: 15px 45px;
+    box-shadow: 3px 2px 17px 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.box h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+.box label {
+    margin: 10px 0 2px 0;
+    font-weight: bold;
+}
+.box input {
+    height: 30px;
+    text-align: center;
+    padding: 0 5px;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+}
+.box select {
+    height: 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 0 5px;
+}
+.box select:focus {
+    border:3px solid #007AFF;
+    color: #000;
+}
+input[type="submit"] {
+    margin: 10px 0;
+    height: 35px;
+    font-weight: bold;
+    font-size: 17px;
+    color: #fff;
+    background: #007AFF;
+    border: 2px solid #007AFF;
+    border-radius: 5px;
+}
+input[type="submit"]:hover {
+    background: transparent;
+    color: #000;
+}
+.loglink {
+    text-align: end;
+    margin:5px;
+}
+.error {
+    text-align: center;
+    color: #c90000;
+    font-weight: bold;
+}
+
+
+/* login */
+
+.box.in {
+    height: 390px;
+}
+.box.in label {
+    margin: 15px 0;
+}
+.box.in input {
+    height: 40px;
+}
+.box.in input[type="submit"] {
+    margin: 25px 0;
+}
+.reparol {
+    text-align: end;
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
+
+/* responseve */
+
+@media only screen and (max-width: 760px) {
+    .box , .box.in {
+        width: 90%;
+        height: min-content;
+    }
+}
