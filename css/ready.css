@@ -335,7 +335,18 @@ ul.profil a {
 }
 .comm .data {
     font-size: 15px;
-    margin: 0px 31px;
+    margin: 0px 15px;
+    padding-top: 4px;
+}
+.comm .time {
+    font-size: 15px;
+    margin: 0px 5px;
+    padding-top: 4px;
+    margin-left: -11px;
+}
+.delCom {
+    font-size: 15px;
+    margin: 0px 10px;
     padding-top: 4px;
 }
 .comment form.addcom{
@@ -360,7 +371,9 @@ ul.profil a {
 .comment .addcom a {
     text-align: center;
 }
-
+.comm li {
+    margin-bottom: 5px;
+}
 
 .out {
     width: max-content;
@@ -368,8 +381,8 @@ ul.profil a {
     background-color: #00f;
     border-radius: 7px;
     position: absolute;
-    right: 29%;
-    top: 30px;
+    right: -121%;
+    top: 34px;
     padding: 10px;
     z-index: 5;
     display: none;
@@ -385,4 +398,14 @@ ul.profil:hover .out {
 }
 .out a[href='profil.php'] {
     color: #e0fb00;
+}
+
+
+.prBox {
+    position: absolute;
+    background: transparent;
+    width: 55px;
+    height: 37px;
+    top: -7px;
+    right: 0;
 }

@@ -124,6 +124,15 @@ ul.profil a {
     font-size: 31px;
 }
 
+/*search val*/
+.searchError {
+    width: 100%;
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #cccccc;
+    margin-bottom: -25px;
+}
 /* blog */
 .blog {
     width: 100%;
@@ -296,13 +305,13 @@ ul.profil a {
     background-color: #00f;
     border-radius: 7px;
     position: absolute;
-    right: 29%;
-    top: 30px;
+    right: -121%;
+    top: 34px;
     padding: 10px;
     z-index: 5;
     display: none;
 }
-ul.profil:hover .out {
+.prBox:hover .out {
     display: block;
     display: flex;
     flex-direction: column;
@@ -313,4 +322,13 @@ ul.profil:hover .out {
 }
 .out a[href='profil.php'] {
     color: #e0fb00;
+}
+
+.prBox {
+    position: absolute;
+    background: transparent;
+    width: 55px;
+    height: 37px;
+    top: -7px;
+    right: 0;
 }

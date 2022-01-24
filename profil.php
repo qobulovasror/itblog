@@ -139,12 +139,12 @@
 	 					$query = "SELECT * FROM post WHERE author='$id'";
 	 					$resoult=mysqli_query($link,$query);
 	 					for($data=[];$row=mysqli_fetch_assoc($result);$data[]=$row);
-	 					if (!empty($data)) {
+	 					if (!empty($resoult)) {
 	 						$result='';
 	 						foreach($data as $value){
-	 							// $result.="<table><tr>";
-	 							// $result.="<th>";
+	 							$result.="";
 	 						}
+	 						echo $result;
 	 					}else{
 	 						echo "<h3>Hozircha siz blog yozmagansiz</h3><br><a href='inputBlog.php'>Blog yozish uchun havola</a>";
 	 					}
@@ -152,16 +152,6 @@
 	 			</div>
 	 		</div>
 	 </div>
-	 <!-- <table>
-	 	<tr>
-	 		<th>fafea</th>
-	 		<th>dvdv</th>
-	 	</tr>
-	 	<tr>
-	 		<td>sf</td>
-	 		<td>dcsc</td>
-	 	</tr>
-	 </table> -->
 </body>
 <script>
 		// target alert

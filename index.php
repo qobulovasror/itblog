@@ -11,6 +11,11 @@
         session_destroy();
         headerFun("index.php");
 		}
+
+		// menu target
+		if (!empty($_GET['menuSea'])) {
+			$_SESSION['search'] = $_GET['menuSea'];
+		}
  ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,19 +36,19 @@
 					<li><a href="#" class="activ">Barcha blog</a></li>
 					<li class="addMenu">Dasturlash +
 						<ul class="navAddBox column">
-							<li><a href="#">Javascript</a></li>
-							<li><a href="#">Php</a></li>
-							<li><a href="#">Python</a></li>
-							<li><a href="#">C++</a></li>
-							<li><a href="#">C#</a></li>
-							<li><a href="#">Java</a></li>
-							<li><a href="#">Boshqalar</a></li>
+							<li><a href="?menuSea=javascript">Javascript</a></li>
+							<li><a href="?menuSea=php">Php</a></li>
+							<li><a href="?menuSea=python">Python</a></li>
+							<li><a href="?menuSea=cpp">C++</a></li>
+							<li><a href="?menuSea=csh">C#</a></li>
+							<li><a href="?menuSea=java">Java</a></li>
+							<li><a href="?menuSea=other">Boshqalar</a></li>
 						</ul>
 					</li>
-					<li><a href="#" class="noactiv">Administrator</a></li>
-					<li><a href="#" class="noactiv">Dizayner</a></li>
-					<li><a href="#" class="noactiv">Qiziqarli</a></li>
-					<li><a href="#" class="noactiv">Boshqalar</a></li>
+					<li><a href="?menuSea=administrator" class="noactiv">Administrator</a></li>
+					<li><a href="?menuSea=Dizayner" class="noactiv">Dizayner</a></li>
+					<li><a href="?menuSea=Qiziqarli" class="noactiv">Qiziqarli</a></li>
+					<li><a href="?menuSea=Boshqalar" class="noactiv">Boshqalar</a></li>
 				</ul>
 				<ul class="profil row">
 					<li id="search"><i class="bx bx-search"></i></li>
@@ -51,45 +56,32 @@
 						if (!empty($_SESSION['auth'])) {
 							  echo "<li><a href='inputBlog.php'><i class='bx bx-edit'></i></a></li>
 											<li><a href='profil.php'><i class='bx bx-user'></i></a></li>
+											<li class='prBox'>
 												<div class='out column'>
 													<a href='profil.php'>$login</a>
 													<a href='inputBlog.php'>Blog yozish</a>
 													<a href='?logout=0'>Chiqish</a>
 												</div>
+											</li>
 										";
 						}else{
 							echo '
 							<li><a href="login.php"><i class="bx bx-edit"></i></a></li>
 							<li><a href="login.php"><i class="bx bx-user"></i></a></li>
-							<div class="out">
-								<a href="login.php">Tizimga kirish</a>
-							</div>
+							<li class="prBox">
+								<div class="out">
+									<a href="login.php">Tizimga kirish</a>
+								</div>
+							</li>
 							 ';
 						}
 					 ?>					
 				</ul>
 			</div>
 
-			<?php 
-				// code for search
-				if (!empty($_GET['searchKey'])) {
-						$searchKey = $_GET['searchKey'];
-						$query = "SELECT * FROM post WHERE searchKey='$searchKey'";
-						$result = mysqli_fetch_assoc(mysqli_query($link,$query));
-						$searchResoult = '';
-						$search = "";
-						if (!empty($result)) {
-							$search = "active";
-							$searchResoult = $result;
-						}else{
-							$search = "noactive";
-						}
-				}
-			 ?>
-
 			<form action="index.php" method="get" class="row" id="searchWin">
 				<input type="text" name="searchKey" id="searchKey">
-				<input type="submit" value="Search">
+				<input type="submit" value="Search" id="searchSubmit">
 				<div id="searchCancel"><i class='bx bx-x'></i></div>
 			</form>
 		</div>
@@ -122,15 +114,7 @@
 				</li> -->
 				<?php 
 
-					if (!empty($search)) {
-							if ($search == "active") {
-								
-							}else{
-								echo "Natija yuq !";
-							}
-					}else{
-
-						$query = "SELECT * FROM post";
+					$query = "SELECT * FROM post";
 						$result = mysqli_query($link,$query)or die(mysqli_error($link));
 						for($data = []; $row = mysqli_fetch_assoc($result);$data[] = $row);
 						$result = '';
@@ -148,10 +132,83 @@
 							$result.='<img src="img/postimg/'.$value['img'].'"alt="post-01" class="postImg">';
 							// $text = explode(' ', $value['text']);
 							// $text1 = 
-							$result.='<p class="post-text">'.$value['text'].'</p>';
+							$result.='<p class="post-text">'.$value['intoText'].'</p>';
 							$result.="<a href='?ready=".$value['id']."' class='more btn'>Ko'proq o'qish</a>";
 							$result.='</li>';
 						}
+
+
+				// 
+				if (!empty($_GET['searchKey']) or !empty($_SESSION['search'])) {
+					if (!empty($_SESSION['search'])) {
+						$searchKey = $_SESSION['search'];
+						$searchKey = strtolower($searchKey);
+					}else{
+						$searchKey = $_GET['searchKey'];
+						$searchKey = strtolower($searchKey);
+					}
+
+						$query = "SELECT * FROM post";
+						$result1 = mysqli_query($link,$query);
+						for($data = []; $row = mysqli_fetch_assoc($result1);$data[] = $row);
+						$serchRes='';
+						$searchValue = array();
+
+						foreach($data as $value){
+							$serchRes = $value['searchKey'];
+							if(!empty(strpos($serchRes, ','))){
+								
+								$posArr = explode("," , $serchRes);
+
+								foreach($posArr as $value1){
+									$value1 = strtolower($value1);
+									if ($value1 == $searchKey) {
+										array_push($searchValue, $value['id']);
+										break;
+									}
+								}
+								
+							}else{
+								if ($serchRes == $searchKey) {
+										array_push($searchValue, $value['id']);
+									}
+							}
+							
+						}
+						
+						if (!empty($searchValue)) {
+							$SeaResVal = '';
+							foreach($searchValue as $value2){
+								$query = "SELECT * FROM post WHERE id='$value2'";
+								$result2 = mysqli_fetch_assoc(mysqli_query($link,$query));
+
+								$SeaResVal.="<li class='post column'> <div class='row author'>";
+
+								$author = $result2['author'];
+								$query = "SELECT * FROM user WHERE id = '$author'";
+								$resoult=mysqli_fetch_assoc(mysqli_query($link,$query));
+
+								$SeaResVal.='<img src="img/userimg/'.$resoult['img'].'" alt="author img">';
+								$SeaResVal.='<h3>'.$resoult['name'].'</h3>';
+								$SeaResVal.='<div class="data">'.$result2['creatdate'].'</div> </div>';
+								$SeaResVal.='<h2 class="postTitle">'.$result2['title'].' </h2>';
+								$SeaResVal.='<img src="img/postimg/'.$result2['img'].'"alt="post-01" class="postImg">';
+								// $text = explode(' ', $value['text']);
+								// $text1 = 
+								$SeaResVal.='<p class="post-text">'.$result2['intoText'].'</p>';
+								$SeaResVal.="<a href='?ready=".$result2['id']."' class='more btn'>Ko'proq o'qish</a>";
+								$SeaResVal.='</li>';
+							}
+							echo $SeaResVal; 
+						}else{
+							echo "<div class='searchError'>Siz izlagan ma'lumot topilmadi :( </div>";
+							echo "<br><br><br>";
+							echo $result;
+						}
+
+						$_SESSION['search'] = null;
+				}else{
+					// no search box
 						echo $result;
 					}
 

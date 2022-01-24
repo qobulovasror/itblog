@@ -1,6 +1,7 @@
 <?php 
 	
 		function headerFun($link){
+			$_SESSION['ready'] = null;
 			header("Location:$link");
 		}
 		session_start();
@@ -10,6 +11,18 @@
 		if (isset($_GET['logout'])) {
         session_destroy();
         headerFun("index.php");
+		}
+
+		if (!empty($_SESSION['ready'])) {
+				$readyId = $_SESSION['ready'] ;
+		}else{
+				headerFun('index.php');
+		}
+
+		// menu target
+		if (!empty($_GET['menuSea'])) {
+			$_SESSION['search'] = $_GET['menuSea'];
+			headerFun('index.php');
 		}
  ?> 
 <!DOCTYPE html>
@@ -31,19 +44,19 @@
 					<li><a href="#" class="activ">Barcha blog</a></li>
 					<li class="addMenu">Dasturlash +
 						<ul class="navAddBox column">
-							<li><a href="#">Javascript</a></li>
-							<li><a href="#">Php</a></li>
-							<li><a href="#">Python</a></li>
-							<li><a href="#">C++</a></li>
-							<li><a href="#">C#</a></li>
-							<li><a href="#">Java</a></li>
-							<li><a href="#">Boshqalar</a></li>
+							<li><a href="?menuSea=javascript">Javascript</a></li>
+							<li><a href="?menuSea=php">Php</a></li>
+							<li><a href="?menuSea=python">Python</a></li>
+							<li><a href="?menuSea=cpp">C++</a></li>
+							<li><a href="?menuSea=csh">C#</a></li>
+							<li><a href="?menuSea=java">Java</a></li>
+							<li><a href="?menuSea=other">Boshqalar</a></li>
 						</ul>
 					</li>
-					<li><a href="#" class="noactiv">Administrator</a></li>
-					<li><a href="#" class="noactiv">Dizayner</a></li>
-					<li><a href="#" class="noactiv">Qiziqarli</a></li>
-					<li><a href="#" class="noactiv">Boshqalar</a></li>
+					<li><a href="?menuSea=administrator" class="noactiv">Administrator</a></li>
+					<li><a href="?menuSea=Dizayner" class="noactiv">Dizayner</a></li>
+					<li><a href="?menuSea=Qiziqarli" class="noactiv">Qiziqarli</a></li>
+					<li><a href="?menuSea=Boshqalar" class="noactiv">Boshqalar</a></li>
 				</ul>
 				<ul class="profil row">
 					<li id="search"><i class="bx bx-search"></i></li>
@@ -51,20 +64,24 @@
 						if (!empty($_SESSION['auth'])) {
 							  echo "<li><a href='inputBlog.php'><i class='bx bx-edit'></i></a></li>
 											<li><a href='profil.php'><i class='bx bx-user'></i></a></li>
+											<li class='prBox'>
 												<div class='out column'>
 													<a href='profil.php'>$login</a>
 													<a href='inputBlog.php'>Blog yozish</a>
 													<a href='?logout=0'>Chiqish</a>
-												</div>										
+												</div>
+											</li>										
 											";
 						}else{
 							echo '
 							<li><a href="login.php"><i class="bx bx-edit"></i></a></li>
 							<li><a href="login.php"><i class="bx bx-user"></i></a></li>
-							<div class="out">
-								<a href="login.php">Tizimga kirish</a>
-							</div>
-							   ';
+							<li class="prBox">
+								<div class="out">
+									<a href="login.php">Tizimga kirish</a>
+								</div>
+							</li>
+							 ';
 						}
 					 ?>					
 				</ul>
@@ -73,17 +90,8 @@
 			<?php 
 				// code for search
 				if (!empty($_GET['searchKey'])) {
-						$searchKey = $_GET['searchKey'];
-						$query = "SELECT * FROM post WHERE searchKey='$searchKey'";
-						$result = mysqli_fetch_assoc(mysqli_query($link,$query));
-						$searchResoult = '';
-						$search = "";
-						if (!empty($result)) {
-							$search = "active";
-							$searchResoult = $result;
-						}else{
-							$search = "noactive";
-						}
+						$_SESSION['search'] = $_GET['searchKey'];
+						headerFun('index.php');
 				}
 			 ?>
 
@@ -97,22 +105,7 @@
 	<div class="blog">
 		<div class="container row">
 			<ul class="blogmain column">
-
 				<?php 
-					if (!empty($_SESSION['ready'])) {
-							$readyId = $_SESSION['ready'] ;
-					}
-				 ?>
-
-				<?php 
-
-					if (!empty($search)) {
-							if ($search == "active") {
-								
-							}else{
-								echo "Natija yuq !";
-							}
-					}else{
 
 						$query = "SELECT * FROM post WHERE id='$readyId' ORDER BY id DESC";
 						$result = mysqli_query($link,$query)or die(mysqli_error($link));
@@ -134,7 +127,7 @@
 								$result.='</li>';
 							}
 							echo $result;
-					}
+					
 
 				 ?>
 
@@ -142,26 +135,38 @@
 				 	<h2>Izohlar</h2>
 				 	<ul class="comm">
 				 		<?php 
+
+				 		// izoh o'chirish
+				 		if (!empty($_GET['delCom'])) {
+				 				$delCom = $_GET['delCom'];
+				 				$query = "DELETE FROM comment WHERE id='$delCom'";
+				 				mysqli_query($link,$query)or die(mysqli_error($link));
+				 		}
+				 		// izoh chiqarish
 				 			$query = "SELECT * FROM comment WHERE postId='$readyId'";
 				 			$result = mysqli_query($link,$query);
 				 			for($data = [];$row=mysqli_fetch_assoc($result);$data[]=$row);
 				 			$result='';
 				 			if (!empty($data)) {
-				 					foreach($data as $value){
-				 				$result.='<li class="row">';
+				 				foreach($data as $value){
+					 				$result.='<li class="row">';
+					 				$author = $value['userId'];
+									$query = "SELECT * FROM user WHERE id = '$author'";
+									$resoult=mysqli_fetch_assoc(mysqli_query($link,$query));
 
-				 				$author = $value['userId'];
-								$query = "SELECT * FROM user WHERE id = '$author'";
-								$resoult=mysqli_fetch_assoc(mysqli_query($link,$query));
+					 				$result.='<img src="img/userimg/'.$resoult['img'].'" alt="author img">';
+									$result.='<div class="com-text">';
+									$result.='<div class="row"><h3>'.$resoult['name'].'</h3>';
+									$result.='<div class="data">'.$value['creatdate'].'</div>';
+									$result.='<div class="time">'.$value['creattime'].'</div> ';
+									if (!empty($_SESSION['id']) and $_SESSION['id']==$value['userId'] ) {
+										 $result.="<a class='delCom' href='?delCom=".$value['id']."'>O'chirish</a>";
+									}	
+									$result.="</div>";
+									$result.='<p>'.$value['comText'].'</p> </div>';
 
-				 				$result.='<img src="img/userimg/'.$resoult['img'].'" alt="author img">';
-								$result.='<div class="com-text">';
-								$result.='<div class="row"><h3>'.$resoult['name'].'</h3>';
-								$result.='<div class="data">'.$value['creatdate'].'</div> </div>';
-								$result.='<p>'.$value['comText'].'</p> </div>';
-
-								$result.='</li>';
-				 			}
+									$result.='</li>';
+				 				}
 				 			echo $result;
 				 			}else{
 				 				echo "Hozircha izoh yo'q";
@@ -175,17 +180,17 @@
 				 		 			$userId = $_SESSION['id'];
 				 		 			$postId = $readyId;
 				 		 			$creatdate = date("Y-m-d");
-				 		 			// $query = "INSERT 	INTO comment SET userId='{$userId}',postId='{$postId}',creatdate='{$creatdate}',comText='".$com."'";
-				 		 			$query = "INSERT INTO comment (userId,postId,creatdate,comText) VALUES(
-				 		 				$userId,$postId,$creatdate,{$com})";
+				 		 			$creattime = date("H:i:s");
+				 		 			$query = "INSERT INTO comment (userId,postId,creatdate,creattime,comText) VALUES('$userId','$postId','$creatdate','$creattime','$com')";
 				 		 			mysqli_query($link,$query)or die(mysqli_error($link));
+				 		 			headerFun('ready.php');
 				 		 		}
 
 
 				 		 		if (!empty($_SESSION['auth']) and !empty($_SESSION['id'])) {
 				 		 				echo '
 				 		 					<form class="addcom" method="get">
-				 		 						<input type="text" placeholder="Izoh yozing !!!" name="comment">
+				 		 						<input type="text" placeholder="Izoh yozing" name="comment">
 				 		 						<input type="submit" value="Joylash">
 				 		 					</form>
 				 		 				';
