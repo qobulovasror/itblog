@@ -8,6 +8,11 @@
     function alert($ele){
 			$alertMessage = $ele;
 		}
+		if (!empty($_GET['veiComm'])) {
+				$_SESSION['ready'] = $_GET['veiComm'];
+				headerFun('ready.php');
+		}
+
  ?> 
  <!DOCTYPE html>
 <html lang="en">
@@ -71,12 +76,13 @@
 	 <header>
       <div class="container">
       	<div class="row between">
-      		<a href="index.php" class="logo">Online test</a>
+      		<a href="index.php" class="logo">IT Blog</a>
       		<a href="index.php" class="home">Bosh sahifaga qaytish</a>
         	<div class="log row" id="userName">
             <?php 
                   echo "<div class='profil'> <b>$login</b>
                           <ul class='prof-win'>
+															<li><a href='inputBlog.php'>Blog yozish</a></li>
                               <li><a href='?logout=0'>Chiqish</a></li>
                           </ul>
                       </div>
@@ -134,22 +140,42 @@
 	 <div class="box2">
 	 		<div class="container">
 	 			<h2>Bloglaringiz</h2>
-	 			<div class="content1">
-	 				<?php 
-	 					$query = "SELECT * FROM post WHERE author='$id'";
-	 					$resoult=mysqli_query($link,$query);
-	 					for($data=[];$row=mysqli_fetch_assoc($result);$data[]=$row);
-	 					if (!empty($resoult)) {
-	 						$result='';
-	 						foreach($data as $value){
-	 							$result.="";
-	 						}
-	 						echo $result;
-	 					}else{
-	 						echo "<h3>Hozircha siz blog yozmagansiz</h3><br><a href='inputBlog.php'>Blog yozish uchun havola</a>";
-	 					}
-	 				?>
-	 			</div>
+	 			<ul class="content1">
+		 				<?php 
+		 					// postn o'chirish
+
+		 					if(!empty($_GET['delPost'])){
+		 						$delPost = $_GET['delPost'];
+		 						$query = "DELETE FROM post WHERE id='$delPost'";
+		 						mysqli_query($link,$query)or die(mysqli_error($link));
+		 					}
+
+		 					$query = "SELECT * FROM post WHERE author='$id'";
+		 					$resoult=mysqli_query($link,$query);
+		 					for($data=[];$row=mysqli_fetch_assoc($resoult);$data[]=$row);
+		 					if (!empty($resoult)) {
+		 						$result='';
+		 						foreach($data as $value){
+		 							$result.="<li>";
+		 							$result.='<div class="row"><b>Sarlavhasi:</b><h3>'.$value['title'].'</h3></div>';
+		 							$result.='<div class="row"><b>Qisqa mazmuni:</b><h4>'.$value['intoText'].'</h4></div>';
+		 							$result.='<div class="row"><b>Matni:</b><p>'.$value['maintext'].'</p></div>';
+		 							$result.="<div class='row'><b>Qidiruv so'zlari:</b>".$value['searchKey'].'</div>';
+									$result.='<a href="?delPost='.$value['id'].'">O\'chirish</a>';
+									$result.='<button id=edit'.$value['id'].'>Tahrirlash</button>';
+									$result.='<a href="?veiComm='.$value['id'].'">Izohlar</a>';
+		 							$result.="</li>";
+		 						}
+		 						echo $result;
+		 					}else{
+		 						echo "<li class='noneBlog'>
+		 						<h3>Hozircha siz blog yozmagansiz</h3><br>
+		 						<a href='inputBlog.php'>Blog yozish uchun havola</a>
+		 						</li>
+		 						";
+		 					}
+		 				?>
+	 			</ul>
 	 		</div>
 	 </div>
 </body>

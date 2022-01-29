@@ -28,11 +28,3 @@ resMenu.addEventListener('click',()=>{
 menucancel.addEventListener('click',function(){
     resmenuwin.style.left = "-110%";
 })
-    
-
-
-// search
-let searchSubmit = document.getElementById('searchSubmit');
-searchSubmit.addEventListener('click',function(e){
-    e.preventDefault();
-})

@@ -12,7 +12,7 @@
         headerFun("index.php");
 		}
 
-		// menu target
+		// menu target 
 		if (!empty($_GET['menuSea'])) {
 			$_SESSION['search'] = $_GET['menuSea'];
 		}
@@ -31,9 +31,10 @@
 	<header>
 		<div class="container">
 			<div class="navbar row between">
+				<div id="resMenu"><i class='bx bx-menu'></i></div>
 				<a href="index.php" class="logo">IT Blog</a>
 				<ul class="nav row">
-					<li><a href="#" class="activ">Barcha blog</a></li>
+					<li><a href="index.php" class="activ">Barcha blog</a></li>
 					<li class="addMenu">Dasturlash +
 						<ul class="navAddBox column">
 							<li><a href="?menuSea=javascript">Javascript</a></li>
@@ -58,7 +59,7 @@
 											<li><a href='profil.php'><i class='bx bx-user'></i></a></li>
 											<li class='prBox'>
 												<div class='out column'>
-													<a href='profil.php'>$login</a>
+													<a href='profil.php'>$login(profil)</a>
 													<a href='inputBlog.php'>Blog yozish</a>
 													<a href='?logout=0'>Chiqish</a>
 												</div>
@@ -85,6 +86,27 @@
 				<div id="searchCancel"><i class='bx bx-x'></i></div>
 			</form>
 		</div>
+		<div id="resmenuwin">
+				<div id="menucancel"><i class='bx bx-x'></i></div>
+				<ul class="nav row">
+					<li><a href="index.php" class="activ">Barcha blog</a></li>
+					<li class="addMenu">Dasturlash +
+						<ul class="navAddBox column">
+							<li><a href="?menuSea=javascript">Javascript</a></li>
+							<li><a href="?menuSea=php">Php</a></li>
+							<li><a href="?menuSea=python">Python</a></li>
+							<li><a href="?menuSea=cpp">C++</a></li>
+							<li><a href="?menuSea=csh">C#</a></li>
+							<li><a href="?menuSea=java">Java</a></li>
+							<li><a href="?menuSea=other">Boshqalar</a></li>
+						</ul>
+					</li>
+					<li><a href="?menuSea=administrator" class="noactiv">Administrator</a></li>
+					<li><a href="?menuSea=Dizayner" class="noactiv">Dizayner</a></li>
+					<li><a href="?menuSea=Qiziqarli" class="noactiv">Qiziqarli</a></li>
+					<li><a href="?menuSea=Boshqalar" class="noactiv">Boshqalar</a></li>
+				</ul>
+		</div>
 	</header>
 	<div class="blog">
 		<div class="container row">
@@ -95,26 +117,8 @@
 							$_SESSION['ready'] = $_GET['ready'];
 							headerFun('ready.php');
 					}
-				 ?>
 
-				<!-- <li class="post column">
-					<div class="row author">
-						<img src="img/userimg/user.svg" alt="author img">
-						<h3>Qobulov Asror</h3>
-						<div class="data">15.01.2021</div>
-					</div>
-					<img src="img/post-01.png" alt="post-01" class="postImg">
-					<h2 class="postTitle">
-						JavaScript nima uchun ishlatiladi ?
-					</h2>
-					<p class="post-text">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim distinctio cumque tempore dolor minima sed sunt culpa quis illo provident. Voluptatibus suscipit repellat asperiores aliquid eos ducimus possimus quisquam provident, ipsam repudiandae aspernatur saepe reprehenderit nesciunt officiis illum harum ad molestiae deleniti reiciendis, nobis et blanditiis cum a recusandae? Natus fuga sequi repudiandae voluptatum quas provident velit, a libero blanditiis, nostrum, explicabo vero voluptatem placeat distinctio omnis voluptas aspernatur esse?
-					</p>
-					<a href="#" class="more btn">Ko'proq o'qish</a>
-				</li> -->
-				<?php 
-
-					$query = "SELECT * FROM post";
+					$query = "SELECT * FROM post ORDER BY id DESC";
 						$result = mysqli_query($link,$query)or die(mysqli_error($link));
 						for($data = []; $row = mysqli_fetch_assoc($result);$data[] = $row);
 						$result = '';
@@ -193,8 +197,6 @@
 								$SeaResVal.='<div class="data">'.$result2['creatdate'].'</div> </div>';
 								$SeaResVal.='<h2 class="postTitle">'.$result2['title'].' </h2>';
 								$SeaResVal.='<img src="img/postimg/'.$result2['img'].'"alt="post-01" class="postImg">';
-								// $text = explode(' ', $value['text']);
-								// $text1 = 
 								$SeaResVal.='<p class="post-text">'.$result2['intoText'].'</p>';
 								$SeaResVal.="<a href='?ready=".$result2['id']."' class='more btn'>Ko'proq o'qish</a>";
 								$SeaResVal.='</li>';
@@ -279,7 +281,7 @@
             </div>
             <hr>
             <div class="copry">
-                <h5>Copyright &copy; 2021 All rights reserved | This site is made with by <a href="#">Qobulov Asror</a></h5>
+                <h5>Copyright &copy; 2021 All rights reserved | This site is made with by <a href="#">Qobulov Asror &#xf368;</a></h5>
             </div>
         </div>
     </footer>

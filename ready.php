@@ -1,7 +1,9 @@
 <?php 
 	
 		function headerFun($link){
-			$_SESSION['ready'] = null;
+			if ($link != "ready.php") {
+				$_SESSION['ready'] = null;
+			}
 			header("Location:$link");
 		}
 		session_start();
@@ -39,9 +41,10 @@
 	<header>
 		<div class="container">
 			<div class="navbar row between">
+				<div id="resMenu"><i class='bx bx-menu'></i></div>
 				<a href="index.php" class="logo">IT Blog</a>
 				<ul class="nav row">
-					<li><a href="#" class="activ">Barcha blog</a></li>
+					<li><a href="index.php" class="activ">Barcha blog</a></li>
 					<li class="addMenu">Dasturlash +
 						<ul class="navAddBox column">
 							<li><a href="?menuSea=javascript">Javascript</a></li>
@@ -97,9 +100,30 @@
 
 			<form action="index.php" method="get" class="row" id="searchWin">
 				<input type="text" name="searchKey" id="searchKey">
-				<input type="submit" value="Search">
+				<input type="submit" value="&#128269;">
 				<div id="searchCancel"><i class='bx bx-x'></i></div>
 			</form>
+		</div>
+		<div id="resmenuwin">
+				<div id="menucancel"><i class='bx bx-x'></i></div>
+				<ul class="nav row">
+					<li><a href="index.php" class="activ">Barcha blog</a></li>
+					<li class="addMenu">Dasturlash +
+						<ul class="navAddBox column">
+							<li><a href="?menuSea=javascript">Javascript</a></li>
+							<li><a href="?menuSea=php">Php</a></li>
+							<li><a href="?menuSea=python">Python</a></li>
+							<li><a href="?menuSea=cpp">C++</a></li>
+							<li><a href="?menuSea=csh">C#</a></li>
+							<li><a href="?menuSea=java">Java</a></li>
+							<li><a href="?menuSea=other">Boshqalar</a></li>
+						</ul>
+					</li>
+					<li><a href="?menuSea=administrator" class="noactiv">Administrator</a></li>
+					<li><a href="?menuSea=Dizayner" class="noactiv">Dizayner</a></li>
+					<li><a href="?menuSea=Qiziqarli" class="noactiv">Qiziqarli</a></li>
+					<li><a href="?menuSea=Boshqalar" class="noactiv">Boshqalar</a></li>
+				</ul>
 		</div>
 	</header>
 	<div class="blog">
@@ -123,7 +147,7 @@
 								$result.='<div class="data">'.$value['creatdate'].'</div> </div>';
 								$result.='<h2 class="postTitle">'.$value['title'].' </h2>';
 								$result.='<img src="img/postimg/'.$value['img'].'"alt="post-01" class="postImg">';
-								$result.='<p class="post-text">'.$value['text'].'</p>';
+								$result.='<p class="post-text">'.$value['maintext'].'</p>';
 								$result.='</li>';
 							}
 							echo $result;
@@ -141,6 +165,7 @@
 				 				$delCom = $_GET['delCom'];
 				 				$query = "DELETE FROM comment WHERE id='$delCom'";
 				 				mysqli_query($link,$query)or die(mysqli_error($link));
+				 				headerFun('ready.php');
 				 		}
 				 		// izoh chiqarish
 				 			$query = "SELECT * FROM comment WHERE postId='$readyId'";
@@ -181,7 +206,7 @@
 				 		 			$postId = $readyId;
 				 		 			$creatdate = date("Y-m-d");
 				 		 			$creattime = date("H:i:s");
-				 		 			$query = "INSERT INTO comment (userId,postId,creatdate,creattime,comText) VALUES('$userId','$postId','$creatdate','$creattime','$com')";
+				 		 			$query = 'INSERT INTO comment (userId,postId,creatdate,creattime,comText) VALUES("'.$userId.'","'.$postId.'","'.$creatdate.'","'.$creattime.'","'.$com.'")';
 				 		 			mysqli_query($link,$query)or die(mysqli_error($link));
 				 		 			headerFun('ready.php');
 				 		 		}
@@ -262,6 +287,6 @@
             </div>
         </div>
     </footer>
-	<script src="script/script.js"></script>
+	<script src="script/ready.js"></script>
 </body>
 </html>
