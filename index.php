@@ -16,6 +16,11 @@
 		if (!empty($_GET['menuSea'])) {
 			$_SESSION['search'] = $_GET['menuSea'];
 		}
+		
+		if(isset($_GET['admin'])){
+      // if(condation){}
+      headerFun('Admin/admin.php');
+    }
  ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,16 +60,21 @@
 					<li id="search"><i class="bx bx-search"></i></li>
 					<?php 
 						if (!empty($_SESSION['auth'])) {
-							  echo "<li><a href='inputBlog.php'><i class='bx bx-edit'></i></a></li>
+							  $cout ="<li><a href='inputBlog.php'><i class='bx bx-edit'></i></a></li>
 											<li><a href='profil.php'><i class='bx bx-user'></i></a></li>
 											<li class='prBox'>
 												<div class='out column'>
 													<a href='profil.php'>$login(profil)</a>
-													<a href='inputBlog.php'>Blog yozish</a>
-													<a href='?logout=0'>Chiqish</a>
+													<a href='inputBlog.php'>Blog yozish</a>";
+												if (!empty($_SESSION['admin']) and $_SESSION['admin'] = 'Admin01') {
+                    				$cout .= "<a href='?admin=0'>Admin panel</a>";
+                  				}
+													$cout .="<a href='?logout=0'>Chiqish</a>
 												</div>
 											</li>
 										";
+										echo $cout;
+
 						}else{
 							echo '
 							<li><a href="login.php"><i class="bx bx-edit"></i></a></li>
@@ -117,7 +127,12 @@
 							$_SESSION['ready'] = $_GET['ready'];
 							headerFun('ready.php');
 					}
-
+					// boshqaruv
+					$postHead = 1;
+					$postEnd= 10;
+					if (!empty($_GET['nextpage'])) {
+							
+					}
 					$query = "SELECT * FROM post ORDER BY id DESC";
 						$result = mysqli_query($link,$query)or die(mysqli_error($link));
 						for($data = []; $row = mysqli_fetch_assoc($result);$data[] = $row);
@@ -216,15 +231,14 @@
 
 				 ?>
 				<div class="driction row between">
-					<a href="#" class="btn row"><i class='bx bx-left-arrow-alt'></i>Oldingi</a>
+					<a href="?nextpage=level" class="btn row"><i class='bx bx-left-arrow-alt'></i>Oldingi</a>
 					<ul class="row drictnum">
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
+						<li><a href="nextpage=1-10">1-10</a></li>
+						<li><a href="nextpage=10-20">10-20</a></li>
 						<li>. . .</li>
 						<li><a href="#">15</a></li>
 					</ul>
-					<a href="#" class="btn row">Keyingi <i class='bx bx-right-arrow-alt'></i></a>
+					<a href="next" class="btn row">Keyingi <i class='bx bx-right-arrow-alt'></i></a>
 				</div>
 			</ul>
 			<div class="contextMenu column">

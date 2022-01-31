@@ -47,7 +47,7 @@
                 if(password_verify($parol, $hash)){
                   session_start();
                   $_SESSION["auth"]=true;
-                  $_SESSION['login']=$login;
+                  $_SESSION['login']=$resoult['login'];
                   $_SESSION['id'] = $resoult['id'];
                   if ($login == 'Admin') {
                       $_SESSION['admin'] = 'Admin01';
